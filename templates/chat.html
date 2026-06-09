@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soyoung Data Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">S</span>
+          <div>
+            <h1>Soyoung Data Assistant</h1>
+            <p>连锁数据智能运营助手</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <h2>第一阶段能力</h2>
+          <ul>
+            <li>规则意图识别</li>
+            <li>问答交互骨架</li>
+            <li>毛利率诊断展示</li>
+            <li>SQL 与口径卡片</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>示例问题</h2>
+          <button class="example" data-question="帮我复盘一下5月品项毛利率">帮我复盘一下5月品项毛利率</button>
+          <button class="example" data-question="品项毛利率怎么算？">品项毛利率怎么算？</button>
+          <button class="example" data-question="昨天连锁核销收入是多少？">昨天连锁核销收入是多少？</button>
+          <button class="example" data-question="毛利率主表有哪些字段？">毛利率主表有哪些字段？</button>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MVP · Mock Mode</p>
+            <h2>问答工作台</h2>
+          </div>
+          <a href="/health" target="_blank" rel="noreferrer">Health</a>
+        </header>
+
+        <div id="messages" class="messages">
+          <article class="message assistant">
+            <div class="bubble">
+              <p class="summary">你好，我是连锁数据智能运营助手。第一阶段我可以演示自然语言问答、毛利率诊断结构、SQL 和口径卡片。</p>
+            </div>
+          </article>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <input id="question" name="question" type="text" autocomplete="off" placeholder="输入问题，例如：帮我复盘一下5月品项毛利率">
+          <button type="submit">发送</button>
+        </form>
+      </section>
+    </main>
+
+    <template id="user-template">
+      <article class="message user">
+        <div class="bubble"></div>
+      </article>
+    </template>
+
+    <template id="assistant-template">
+      <article class="message assistant">
+        <div class="bubble">
+          <div class="answer-head">
+            <span class="intent"></span>
+            <span class="confidence"></span>
+          </div>
+          <p class="summary"></p>
+          <div class="sections"></div>
+          <details class="sql-block">
+            <summary>查看生成 SQL</summary>
+            <pre><code></code></pre>
+          </details>
+          <div class="caliber"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+  </body>
+</html>

@@ -34,3 +34,39 @@ docs/         架构、演示案例、开发记录
 - 不提交真实 MaxCompute、Doris、MySQL、LLM API 密钥。
 - 不提交敏感用户明细数据。
 - 公开展示版优先使用脱敏样例数据和脱敏知识片段。
+
+## 第一阶段 MVP
+
+当前已跑通“应用骨架 + 问答交互 + 毛利率诊断展示形态”：
+
+- Flask app factory 和 `/health` 健康检查。
+- `/api/chat` 问答接口。
+- 规则意图识别：毛利率诊断、指标口径、自然语言取数、表字段查询。
+- 毛利率诊断 mock agent：按大盘、三类品、成本侧、补贴侧、下钻方向输出。
+- 聊天页：示例问题、答案卡片、SQL 折叠区、口径声明。
+
+### 本地运行
+
+```powershell
+cd C:\Users\Soyoung\Desktop\Cdemo\soyoung_data_assistant
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python run.py
+```
+
+浏览器访问：
+
+```text
+http://127.0.0.1:5000
+```
+
+健康检查：
+
+```text
+http://127.0.0.1:5000/health
+```
+
+### 当前限制
+
+第一阶段默认 `MOCK_MODE=true`，暂不连接 Doris、LangChain、MaxCompute 和 MySQL。后续会把 mock answer 逐步替换为真实 RAG、SQL 生成、只读查询和会话持久化。
