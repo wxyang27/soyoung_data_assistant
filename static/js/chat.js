@@ -4,6 +4,18 @@ const messages = document.querySelector("#messages");
 const userTemplate = document.querySelector("#user-template");
 const assistantTemplate = document.querySelector("#assistant-template");
 
+const welcomeMessage = {
+  intent: { label: "系统提示", confidence: 1 },
+  summary: "你好，我是连锁数据智能运营助手。第一阶段我可以演示自然语言问答、毛利率诊断结构、SQL 和口径卡片。",
+  sections: [],
+  sql: "",
+  caliber: ["聊天历史会自动从本地 SQLite 读取。"],
+};
+
+function clearMessages() {
+  messages.innerHTML = "";
+}
+
 function appendUserMessage(text) {
   const node = userTemplate.content.cloneNode(true);
   node.querySelector(".bubble").textContent = text;
@@ -15,7 +27,7 @@ function appendAssistantMessage(data) {
   const node = assistantTemplate.content.cloneNode(true);
 
   node.querySelector(".intent").textContent = data.intent.label;
-  node.querySelector(".confidence").textContent = `confidence ${(data.intent.confidence * 100).toFixed(0)}%`;
+  node.querySelector(".confidence").textContent = `置信度 ${(data.intent.confidence * 100).toFixed(0)}%`;
   node.querySelector(".summary").textContent = data.summary;
 
   const sections = node.querySelector(".sections");
@@ -71,13 +83,68 @@ function appendErrorMessage(text) {
   });
 }
 
+function parsePayload(payloadJson) {
+  if (!payloadJson) return null;
+  try {
+    return JSON.parse(payloadJson);
+  } catch (error) {
+    return null;
+  }
+}
+
+function appendHistoryMessage(message) {
+  if (message.role === "user") {
+    appendUserMessage(message.content);
+    return;
+  }
+
+  const payload = parsePayload(message.payload_json);
+  if (payload) {
+    appendAssistantMessage(payload);
+    return;
+  }
+
+  appendAssistantMessage({
+    intent: { label: message.intent || "历史消息", confidence: 1 },
+    summary: message.content,
+    sections: [],
+    sql: message.sql_text || "",
+    caliber: ["这条历史消息来自本地 SQLite。"],
+  });
+}
+
+async function loadHistory() {
+  try {
+    const response = await fetch("/api/history");
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "历史记录加载失败");
+    }
+
+    clearMessages();
+    if (!data.messages || data.messages.length === 0) {
+      appendAssistantMessage(welcomeMessage);
+      return;
+    }
+
+    for (const message of data.messages) {
+      appendHistoryMessage(message);
+    }
+  } catch (error) {
+    clearMessages();
+    appendErrorMessage(`历史记录加载失败：${error.message}`);
+  }
+}
+
 function scrollToBottom() {
   messages.scrollTop = messages.scrollHeight;
 }
 
 async function sendQuestion(question) {
   appendUserMessage(question);
-  form.querySelector("button").disabled = true;
+  const submitButton = form.querySelector("button");
+  submitButton.disabled = true;
+  submitButton.textContent = "分析中";
 
   try {
     const response = await fetch("/api/chat", {
@@ -95,7 +162,8 @@ async function sendQuestion(question) {
   } catch (error) {
     appendErrorMessage(error.message);
   } finally {
-    form.querySelector("button").disabled = false;
+    submitButton.disabled = false;
+    submitButton.textContent = "发送";
     input.focus();
   }
 }
@@ -115,3 +183,5 @@ document.querySelectorAll(".example").forEach((button) => {
     sendQuestion(question);
   });
 });
+
+loadHistory();

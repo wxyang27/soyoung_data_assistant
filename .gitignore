@@ -14,6 +14,8 @@ venv/
 # Data / cache
 .cache/
 chroma/
+instance/
+knowledge/raw/
 *.db
 *.sqlite
 *.csv

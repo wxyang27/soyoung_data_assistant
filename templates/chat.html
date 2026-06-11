@@ -3,32 +3,41 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Soyoung Data Assistant</title>
+    <title>新氧连锁数据智能运营助手</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
   </head>
   <body>
     <main class="app-shell">
       <aside class="sidebar">
         <div class="brand">
-          <span class="brand-mark">S</span>
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-mark-cn">新氧</span>
+            <span class="brand-mark-en">SOYOUNG</span>
+          </span>
           <div>
-            <h1>Soyoung Data Assistant</h1>
-            <p>连锁数据智能运营助手</p>
+            <h1>新氧数据助手</h1>
+            <p>连锁业务智能运营问答平台</p>
           </div>
         </div>
 
         <section class="panel">
-          <h2>第一阶段能力</h2>
-          <ul>
-            <li>规则意图识别</li>
-            <li>问答交互骨架</li>
-            <li>毛利率诊断展示</li>
-            <li>SQL 与口径卡片</li>
+          <div class="panel-title">
+            <span>阶段能力</span>
+            <span class="status-dot">MVP</span>
+          </div>
+          <ul class="capability-list">
+            <li><span>意图</span>规则意图识别</li>
+            <li><span>问答</span>连锁经营交互骨架</li>
+            <li><span>诊断</span>毛利率结构化展示</li>
+            <li><span>口径</span>SQL 与指标卡片</li>
           </ul>
         </section>
 
         <section class="panel">
-          <h2>示例问题</h2>
+          <div class="panel-title">
+            <span>示例问题</span>
+            <span class="status-dot soft">Try</span>
+          </div>
           <button class="example" data-question="帮我复盘一下5月品项毛利率">帮我复盘一下5月品项毛利率</button>
           <button class="example" data-question="品项毛利率怎么算？">品项毛利率怎么算？</button>
           <button class="example" data-question="昨天连锁核销收入是多少？">昨天连锁核销收入是多少？</button>
@@ -39,22 +48,37 @@
       <section class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">MVP · Mock Mode</p>
-            <h2>问答工作台</h2>
+            <p class="eyebrow">MVP · Mock Mode · Chain Analytics</p>
+            <h2>连锁经营问答工作台</h2>
           </div>
-          <a href="/health" target="_blank" rel="noreferrer">Health</a>
+          <a class="health-link" href="/health" target="_blank" rel="noreferrer">服务状态</a>
         </header>
+
+        <section class="insight-strip" aria-label="核心分析对象">
+          <div>
+            <span class="metric-label">分析主题</span>
+            <strong>毛利率 / 核销收入 / 品项结构</strong>
+          </div>
+          <div>
+            <span class="metric-label">响应模式</span>
+            <strong>问答 + SQL + 口径</strong>
+          </div>
+          <div>
+            <span class="metric-label">数据源</span>
+            <strong>本地 SQLite / Mock</strong>
+          </div>
+        </section>
 
         <div id="messages" class="messages">
           <article class="message assistant">
             <div class="bubble">
-              <p class="summary">你好，我是连锁数据智能运营助手。第一阶段我可以演示自然语言问答、毛利率诊断结构、SQL 和口径卡片。</p>
+              <p class="summary">正在读取本地聊天历史...</p>
             </div>
           </article>
         </div>
 
         <form id="chat-form" class="composer">
-          <input id="question" name="question" type="text" autocomplete="off" placeholder="输入问题，例如：帮我复盘一下5月品项毛利率">
+          <input id="question" name="question" type="text" autocomplete="off" placeholder="输入经营问题，例如：帮我复盘一下5月品项毛利率">
           <button type="submit">发送</button>
         </form>
       </section>

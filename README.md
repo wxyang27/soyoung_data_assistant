@@ -41,6 +41,7 @@ docs/         架构、演示案例、开发记录
 
 - Flask app factory 和 `/health` 健康检查。
 - `/api/chat` 问答接口。
+- 本地 SQLite：自动初始化用户、会话、聊天历史等应用表。
 - 规则意图识别：毛利率诊断、指标口径、自然语言取数、表字段查询。
 - 毛利率诊断 mock agent：按大盘、三类品、成本侧、补贴侧、下钻方向输出。
 - 聊天页：示例问题、答案卡片、SQL 折叠区、口径声明。
@@ -65,6 +66,18 @@ http://127.0.0.1:5000
 
 ```text
 http://127.0.0.1:5000/health
+```
+
+初始化 SQLite：
+
+```powershell
+python scripts/init_sqlite.py
+```
+
+默认数据库文件：
+
+```text
+instance/soyoung_data_assistant.db
 ```
 
 ### 当前限制

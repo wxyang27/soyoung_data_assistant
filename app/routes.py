@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, jsonify, render_template, request
 
+from app.db import list_recent_messages, save_chat_exchange
 from app.services.mock_answer import build_chat_response
 
 
@@ -19,6 +20,7 @@ def health():
             "app": current_app.config["APP_NAME"],
             "version": current_app.config["APP_VERSION"],
             "mock_mode": current_app.config["MOCK_MODE"],
+            "db_path": current_app.config["APP_DB_PATH"],
         }
     )
 
@@ -31,4 +33,11 @@ def chat():
     if not question:
         return jsonify({"error": "请输入你的问题。"}), 400
 
-    return jsonify(build_chat_response(question))
+    response = build_chat_response(question)
+    save_chat_exchange(question, response)
+    return jsonify(response)
+
+
+@bp.get("/api/history")
+def history():
+    return jsonify({"messages": list_recent_messages(limit=20)})
