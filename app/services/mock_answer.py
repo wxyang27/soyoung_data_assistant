@@ -1,11 +1,21 @@
+﻿from flask import current_app
+
 from app.services.gross_margin_agent import build_gross_margin_diagnosis
 from app.services.intent_recognition import recognize_intent
 from app.services.rag_answer import build_rag_sections
+from app.services.rag_chain import build_llm_rag_response
 from app.services.retrieval import search_knowledge
 
 
 def build_chat_response(question: str) -> dict:
     intent = recognize_intent(question)
+
+    if not current_app.config["MOCK_MODE"]:
+        try:
+            return build_llm_rag_response(question, intent)
+        except Exception as exc:
+            current_app.logger.warning("LLM RAG fallback to mock answer: %s", exc)
+
     citations = search_knowledge(question, top_k=5)
 
     if intent.name == "gross_margin_diagnosis":
@@ -118,3 +128,5 @@ def build_general_answer(question: str) -> dict:
         "sql": "",
         "caliber": ["当前是第一阶段 MVP，重点验证问答交互和展示形态。"],
     }
+
+

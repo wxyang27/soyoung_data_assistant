@@ -1,4 +1,4 @@
-const form = document.querySelector("#chat-form");
+﻿const form = document.querySelector("#chat-form");
 const input = document.querySelector("#question");
 const messages = document.querySelector("#messages");
 const userTemplate = document.querySelector("#user-template");
@@ -28,6 +28,14 @@ function appendAssistantMessage(data) {
 
   node.querySelector(".intent").textContent = data.intent.label;
   node.querySelector(".confidence").textContent = `置信度 ${(data.intent.confidence * 100).toFixed(0)}%`;
+  if (data.llm_mode) {
+    const badge = document.createElement("span");
+    badge.className = "llm-badge";
+    const provider = data.llm?.provider || "LLM";
+    const model = data.llm?.model || "RAG";
+    badge.textContent = `${provider} · ${model}`;
+    node.querySelector(".answer-head").appendChild(badge);
+  }
   node.querySelector(".summary").textContent = data.summary;
 
   const sections = node.querySelector(".sections");
@@ -214,3 +222,4 @@ document.querySelectorAll(".example").forEach((button) => {
 });
 
 loadHistory();
+

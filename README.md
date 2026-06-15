@@ -118,6 +118,39 @@ python run.py
 python scripts/evaluate_retrieval.py
 ```
 
+LLM RAG 问答配置：
+
+```env
+MOCK_MODE=false
+LLM_PROVIDER=deepseek
+LLM_BASE_URL=https://api.deepseek.com
+LLM_API_KEY=你的新 API Key
+LLM_MODEL=deepseek-v4-pro
+```
+
+开启 LLM 前先安装依赖：
+
+```powershell
+pip install -r requirements.txt
+```
+
+如果没有配置 `LLM_API_KEY`，或 LLM 调用失败，系统会自动回退到当前 mock 回答，保证演示可用。
+
+命令行测试 LLM RAG：
+
+```powershell
+python scripts/test_llm_rag.py "L0灌券为什么会拖累毛利？"
+```
+
+成功走通 LLM 时，输出中会看到：
+
+```text
+llm_mode=True
+llm=deepseek / deepseek-v4-pro
+```
+
 ### 当前限制
 
 第一阶段默认 `MOCK_MODE=true`，暂不连接 Doris、LangChain、MaxCompute 和 MySQL。后续会把 mock answer 逐步替换为真实 RAG、SQL 生成、只读查询和会话持久化。
+
+

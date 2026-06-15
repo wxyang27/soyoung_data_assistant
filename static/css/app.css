@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #f3f8f5;
   --bg-soft: #edf6f1;
   --panel: #ffffff;
@@ -324,6 +324,16 @@ input {
   font-weight: 700;
 }
 
+.llm-badge {
+  border: 1px solid rgba(210, 157, 85, 0.38);
+  border-radius: 999px;
+  background: #fff8eb;
+  color: #9a6a24;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .summary {
   margin: 0 0 14px;
   line-height: 1.7;
@@ -483,3 +493,4 @@ pre {
     grid-template-columns: 1fr;
   }
 }
+
