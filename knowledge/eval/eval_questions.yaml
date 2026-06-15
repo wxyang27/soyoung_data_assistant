@@ -1,0 +1,53 @@
+# Knowledge retrieval evaluation set.
+# 第一版用于人工评估：检查每个问题 Top5 chunk 是否包含 expected_keywords。
+
+- question: 品项毛利率怎么算？
+  expected_keywords:
+    - gross_margin_amt
+    - exe_income
+    - SUM
+    - dws_opt_qy_gross_margin_stats_all_d
+  expected_topics:
+    - gross_margin
+    - metric_definition
+
+- question: L0灌券为什么会拖累毛利？
+  expected_keywords:
+    - L0
+    - 灌券
+    - 纯薅
+    - 0元单
+    - 补贴率
+  expected_topics:
+    - gross_margin
+    - subsidy
+
+- question: 核销收入用哪张表？
+  expected_keywords:
+    - dm_opt_qy_user_execution_record_all_d
+    - exe_income
+    - is_valid
+  expected_topics:
+    - metric_dictionary
+    - table_metadata
+
+- question: 常规品毛利率低应该看什么？
+  expected_keywords:
+    - 常规品
+    - 耗材率
+    - 手工费率
+    - 让利
+    - 补贴
+  expected_topics:
+    - gross_margin
+    - business_analysis
+
+- question: 0元单成本怎么查？
+  expected_keywords:
+    - 0元单
+    - 手工费
+    - 耗材
+    - 会员等级
+  expected_topics:
+    - gross_margin
+    - sql_example

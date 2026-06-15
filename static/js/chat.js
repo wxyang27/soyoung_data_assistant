@@ -56,6 +56,35 @@ function appendAssistantMessage(data) {
     sqlBlock.remove();
   }
 
+  if (data.citations && data.citations.length) {
+    const citations = document.createElement("div");
+    citations.className = "citations";
+
+    const title = document.createElement("h3");
+    title.textContent = "引用来源";
+    citations.appendChild(title);
+
+    const list = document.createElement("ol");
+    for (const citation of data.citations) {
+      const item = document.createElement("li");
+      const heading = document.createElement("strong");
+      heading.textContent = `${citation.title || "未命名片段"} · ${citation.filename}`;
+
+      const meta = document.createElement("span");
+      meta.textContent = `topic=${citation.topic} score=${citation.score}`;
+
+      const text = document.createElement("p");
+      text.textContent = citation.snippet;
+
+      item.appendChild(heading);
+      item.appendChild(meta);
+      item.appendChild(text);
+      list.appendChild(item);
+    }
+    citations.appendChild(list);
+    node.querySelector(".bubble").appendChild(citations);
+  }
+
   const caliber = node.querySelector(".caliber");
   const caliberTitle = document.createElement("h3");
   caliberTitle.textContent = "口径声明";

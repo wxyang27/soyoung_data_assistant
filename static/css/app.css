@@ -368,6 +368,43 @@ pre {
   line-height: 1.55;
 }
 
+.citations {
+  border-top: 1px solid var(--line);
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+.citations h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.citations ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.citations li {
+  margin-bottom: 10px;
+}
+
+.citations strong {
+  display: block;
+}
+
+.citations span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.citations p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .caliber {
   border-left: 3px solid var(--accent);
   border-radius: 0 8px 8px 0;

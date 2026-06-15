@@ -80,6 +80,44 @@ python scripts/init_sqlite.py
 instance/soyoung_data_assistant.db
 ```
 
+知识库体检：
+
+```powershell
+python scripts/audit_knowledge.py
+```
+
+知识库入库：
+
+```powershell
+python scripts/ingest_knowledge.py
+```
+
+知识库检索接口：
+
+```text
+http://127.0.0.1:5000/api/retrieve?q=品项毛利率怎么算
+```
+
+知识库增强问答：
+
+```powershell
+python run.py
+```
+
+在页面输入业务问题后，`/api/chat` 会完成：
+
+- 规则意图识别。
+- SQLite 知识库 TopK 检索。
+- 固定业务框架回答。
+- 追加“知识库依据”和“建议下钻方向”。
+- 返回引用来源，前端展示片段标题、文件名、topic、score 和摘要。
+
+检索效果评估：
+
+```powershell
+python scripts/evaluate_retrieval.py
+```
+
 ### 当前限制
 
 第一阶段默认 `MOCK_MODE=true`，暂不连接 Doris、LangChain、MaxCompute 和 MySQL。后续会把 mock answer 逐步替换为真实 RAG、SQL 生成、只读查询和会话持久化。

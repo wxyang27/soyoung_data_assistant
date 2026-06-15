@@ -2,6 +2,7 @@ from flask import Blueprint, current_app, jsonify, render_template, request
 
 from app.db import list_recent_messages, save_chat_exchange
 from app.services.mock_answer import build_chat_response
+from app.services.retrieval import search_knowledge
 
 
 bp = Blueprint("main", __name__)
@@ -41,3 +42,14 @@ def chat():
 @bp.get("/api/history")
 def history():
     return jsonify({"messages": list_recent_messages(limit=20)})
+
+
+@bp.get("/api/retrieve")
+def retrieve():
+    query = (request.args.get("q") or "").strip()
+    top_k = request.args.get("top_k", default=5, type=int)
+
+    if not query:
+        return jsonify({"error": "请输入检索问题。"}), 400
+
+    return jsonify({"query": query, "chunks": search_knowledge(query, top_k=top_k)})

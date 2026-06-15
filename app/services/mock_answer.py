@@ -1,9 +1,12 @@
 from app.services.gross_margin_agent import build_gross_margin_diagnosis
 from app.services.intent_recognition import recognize_intent
+from app.services.rag_answer import build_rag_sections
+from app.services.retrieval import search_knowledge
 
 
 def build_chat_response(question: str) -> dict:
     intent = recognize_intent(question)
+    citations = search_knowledge(question, top_k=5)
 
     if intent.name == "gross_margin_diagnosis":
         answer = build_gross_margin_diagnosis(question)
@@ -16,6 +19,8 @@ def build_chat_response(question: str) -> dict:
     else:
         answer = build_general_answer(question)
 
+    answer = enrich_answer_with_rag(question, answer, citations)
+
     return {
         "question": question,
         "intent": {
@@ -23,7 +28,18 @@ def build_chat_response(question: str) -> dict:
             "label": intent.label,
             "confidence": intent.confidence,
         },
+        "citations": citations,
         **answer,
+    }
+
+
+def enrich_answer_with_rag(question: str, answer: dict, citations: list[dict]) -> dict:
+    rag_parts = build_rag_sections(question, citations)
+
+    return {
+        **answer,
+        "sections": [*answer.get("sections", []), *rag_parts["sections"]],
+        "caliber": [*answer.get("caliber", []), *rag_parts["caliber"]],
     }
 
 

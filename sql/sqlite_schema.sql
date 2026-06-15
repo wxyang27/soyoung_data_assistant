@@ -62,6 +62,39 @@ CREATE TABLE IF NOT EXISTS query_result_cache (
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS kb_documents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_path TEXT NOT NULL UNIQUE,
+    filename TEXT NOT NULL,
+    file_type TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'imported',
+    content_hash TEXT,
+    char_count INTEGER NOT NULL DEFAULT 0,
+    chunk_count INTEGER NOT NULL DEFAULT 0,
+    error_message TEXT,
+    imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS kb_chunks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_id INTEGER NOT NULL,
+    chunk_index INTEGER NOT NULL,
+    title TEXT,
+    content TEXT NOT NULL,
+    char_count INTEGER NOT NULL DEFAULT 0,
+    token_estimate INTEGER NOT NULL DEFAULT 0,
+    metadata_json TEXT,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES kb_documents(id) ON DELETE CASCADE,
+    UNIQUE (document_id, chunk_index)
+);
+
+CREATE INDEX IF NOT EXISTS idx_kb_documents_source_path
+ON kb_documents(source_path);
+
+CREATE INDEX IF NOT EXISTS idx_kb_chunks_document_id
+ON kb_chunks(document_id);
+
 INSERT OR IGNORE INTO users (id, username, display_name, role)
 VALUES (1, 'demo', 'Demo User', 'admin');
 
