@@ -11,14 +11,21 @@
       <aside class="sidebar">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true">
-            <span class="brand-mark-cn">新氧</span>
-            <span class="brand-mark-en">SOYOUNG</span>
+            <span class="brand-mark-cn">S</span>
           </span>
           <div>
             <h1>新氧数据助手</h1>
-            <p>连锁业务智能运营问答平台</p>
+            <p>连锁经营 RAG 问答工作台</p>
           </div>
         </div>
+
+        <section class="panel session-panel">
+          <div class="panel-title">
+            <span>对话任务</span>
+            <button id="new-session" class="tiny-action" type="button">新建</button>
+          </div>
+          <div id="sessions" class="session-list" aria-label="对话任务列表"></div>
+        </section>
 
         <section class="panel">
           <div class="panel-title">
@@ -27,9 +34,9 @@
           </div>
           <ul class="capability-list">
             <li><span>意图</span>规则意图识别</li>
-            <li><span>问答</span>连锁经营交互骨架</li>
-            <li><span>诊断</span>毛利率结构化展示</li>
-            <li><span>口径</span>SQL 与指标卡片</li>
+            <li><span>检索</span>SQLite 知识库召回</li>
+            <li><span>生成</span>DeepSeek RAG 回答</li>
+            <li><span>口径</span>SQL 与引用来源</li>
           </ul>
         </section>
 
@@ -38,9 +45,9 @@
             <span>示例问题</span>
             <span class="status-dot soft">Try</span>
           </div>
+          <button class="example" data-question="L0灌券为什么会拖累毛利？">L0灌券为什么会拖累毛利？</button>
           <button class="example" data-question="帮我复盘一下5月品项毛利率">帮我复盘一下5月品项毛利率</button>
           <button class="example" data-question="品项毛利率怎么算？">品项毛利率怎么算？</button>
-          <button class="example" data-question="昨天连锁核销收入是多少？">昨天连锁核销收入是多少？</button>
           <button class="example" data-question="毛利率主表有哪些字段？">毛利率主表有哪些字段？</button>
         </section>
       </aside>
@@ -48,7 +55,7 @@
       <section class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">MVP · Mock Mode · Chain Analytics</p>
+            <p class="eyebrow">DeepSeek RAG · Chain Analytics</p>
             <h2>连锁经营问答工作台</h2>
           </div>
           <a class="health-link" href="/health" target="_blank" rel="noreferrer">服务状态</a>
@@ -57,15 +64,15 @@
         <section class="insight-strip" aria-label="核心分析对象">
           <div>
             <span class="metric-label">分析主题</span>
-            <strong>毛利率 / 核销收入 / 品项结构</strong>
+            <strong>毛利率 / 补贴 / 品项结构</strong>
           </div>
           <div>
             <span class="metric-label">响应模式</span>
-            <strong>问答 + SQL + 口径</strong>
+            <strong>检索 + 生成 + 引用</strong>
           </div>
           <div>
-            <span class="metric-label">数据源</span>
-            <strong>本地 SQLite / Mock</strong>
+            <span class="metric-label">知识来源</span>
+            <strong>SQLite KB / DeepSeek</strong>
           </div>
         </section>
 
@@ -78,7 +85,7 @@
         </div>
 
         <form id="chat-form" class="composer">
-          <input id="question" name="question" type="text" autocomplete="off" placeholder="输入经营问题，例如：帮我复盘一下5月品项毛利率">
+          <input id="question" name="question" type="text" autocomplete="off" placeholder="输入经营问题，例如：L0灌券为什么会拖累毛利？" aria-label="经营问题">
           <button type="submit">发送</button>
         </form>
       </section>
