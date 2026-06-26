@@ -22,6 +22,7 @@ def main():
     print(f"llm_mode={data.get('llm_mode', False)}")
     if data.get("llm"):
         print(f"llm={data['llm'].get('provider')} / {data['llm'].get('model')}")
+    print(f"rag_engine={data.get('rag_engine', 'custom')}")
     print(f"intent={data.get('intent', {}).get('label')}")
     print(f"citations={len(data.get('citations', []))}")
     print("summary=")

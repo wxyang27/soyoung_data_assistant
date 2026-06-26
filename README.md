@@ -122,6 +122,7 @@ LLM RAG 问答配置：
 
 ```env
 MOCK_MODE=false
+RAG_ENGINE=langchain
 LLM_PROVIDER=deepseek
 LLM_BASE_URL=https://api.deepseek.com
 LLM_API_KEY=你的新 API Key
@@ -151,6 +152,7 @@ llm=deepseek / deepseek-v4-pro
 
 ### 当前限制
 
-第一阶段默认 `MOCK_MODE=true`，暂不连接 Doris、LangChain、MaxCompute 和 MySQL。后续会把 mock answer 逐步替换为真实 RAG、SQL 生成、只读查询和会话持久化。
+当前已接入 DeepSeek 与 LangChain RAG 编排；Doris、MaxCompute 和 MySQL 真实查询仍未启用。后续会继续补齐安全 SQL 生成、只读查询和会话任务管理。
+
 
 

@@ -19,6 +19,7 @@ class Config:
     MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() == "true"
     APP_DB_PATH = os.getenv("APP_DB_PATH", str(PROJECT_ROOT / "instance" / "soyoung_data_assistant.db"))
 
+    RAG_ENGINE = os.getenv("RAG_ENGINE", "custom").lower()
     LLM_PROVIDER = os.getenv("LLM_PROVIDER", "deepseek")
     LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.deepseek.com")
     LLM_API_KEY = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY", "")

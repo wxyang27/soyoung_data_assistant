@@ -4,6 +4,7 @@ from app.services.gross_margin_agent import build_gross_margin_diagnosis
 from app.services.intent_recognition import recognize_intent
 from app.services.rag_answer import build_rag_sections
 from app.services.rag_chain import build_llm_rag_response
+from app.services.rag_chain_langchain import build_langchain_rag_response
 from app.services.retrieval import search_knowledge
 
 
@@ -12,6 +13,8 @@ def build_chat_response(question: str) -> dict:
 
     if not current_app.config["MOCK_MODE"]:
         try:
+            if current_app.config.get("RAG_ENGINE") == "langchain":
+                return build_langchain_rag_response(question, intent)
             return build_llm_rag_response(question, intent)
         except Exception as exc:
             current_app.logger.warning("LLM RAG fallback to mock answer: %s", exc)
